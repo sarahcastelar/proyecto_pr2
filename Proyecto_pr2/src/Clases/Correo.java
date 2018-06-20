@@ -3,90 +3,77 @@ package Clases;
 
 public class Correo {
     
-    private String correo;
     private String nombre;
-    private String apellido;
-    private int edad;
-    private String nacionalidad;
-    private String preguntaSeguridad;
-    private String respuestaSeguridad;
+    private String correoEmisor;
+    private String correoReceptor;
+    private String asunto;
+    private String cuerpo;
+    
+    /*
+    private String bandeja;
+    private String spam;
+    private String eliminados;
+    private String papeleraReciclaje;
+    creo que esto son clases. 
+    */
     
 
     public Correo() {
     }
 
-    public Correo(String correo, String nombre, String apellido, int edad, String nacionalidad, String preguntaSeguridad, String respuestaSeguridad) {
-        this.correo = correo;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.edad = edad;
-        this.nacionalidad = nacionalidad;
-        this.preguntaSeguridad = preguntaSeguridad;
-        this.respuestaSeguridad = respuestaSeguridad;
+    public Correo(String correoEmisor) {
+        this.correoEmisor = correoEmisor;
+    }
+    
+    public Correo( String correoEmisor, String correoReceptor, String asunto, String cuerpo) {;
+        this.correoEmisor = correoEmisor;
+        this.correoReceptor = correoReceptor;
+        this.asunto = asunto;
+        this.cuerpo = cuerpo;
+    }
+    
+    public String getCorreoEmisor() {
+        return correoEmisor;
     }
 
-    public String getCorreo() {
-        return correo;
+    public void setCorreoEmisor(String correoEmisor) {
+        this.correoEmisor = correoEmisor;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public String getCorreoReceptor() {
+        return correoReceptor;
     }
 
-    public String getNombre() {
-        return nombre;
+    public void setCorreoReceptor(String correoReceptor) {
+        this.correoReceptor = correoReceptor;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public String getAsunto() {
+        return asunto;
     }
 
-    public String getApellido() {
-        return apellido;
+    public void setAsunto(String asunto) {
+        this.asunto = asunto;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public String getCuerpo() {
+        return cuerpo;
     }
 
-    public int getEdad() {
-        return edad;
-    }
-
-    public void setEdad(int edad) {
-        this.edad = edad;
-    }
-
-    public String getNacionalidad() {
-        return nacionalidad;
-    }
-
-    public void setNacionalidad(String nacionalidad) {
-        this.nacionalidad = nacionalidad;
-    }
-
-    public String getPreguntaSeguridad() {
-        return preguntaSeguridad;
-    }
-
-    public void setPreguntaSeguridad(String preguntaSeguridad) {
-        this.preguntaSeguridad = preguntaSeguridad;
-    }
-
-    public String getRespuestaSeguridad() {
-        return respuestaSeguridad;
-    }
-
-    public void setRespuestaSeguridad(String respuestaSeguridad) {
-        this.respuestaSeguridad = respuestaSeguridad;
+    public void setCuerpo(String cuerpo) {
+        this.cuerpo = cuerpo;
     }
 
     @Override
     public String toString() {
-        return "Correo{" + "correo=" + correo + ", nombre=" + nombre + ", apellido=" + apellido + ", edad=" + edad + ", nacionalidad=" + nacionalidad + ", preguntaSeguridad=" + preguntaSeguridad + ", respuestaSeguridad=" + respuestaSeguridad + '}';
+        return correoEmisor;
     }
+    
+    
+    
     
     
     
     
 }
+    
