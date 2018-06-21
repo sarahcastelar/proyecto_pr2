@@ -1592,10 +1592,8 @@ WindowEvent we;
     private void jl_correoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_correoMouseClicked
         // ENTRA AL CORREO
         if (esAdmin) {
-            mostrosJDialogs(moduloAdmin);
-
-            
-            //o la información de algún correo en específico.
+                     
+            mostrosJDialogs(moduloAdmin);        
             
         } else if(!esAdmin) {
             mostrosJDialogs(moduloLecturaCorreo);
@@ -1642,45 +1640,50 @@ WindowEvent we;
 
     private void jb_buscarDirectorioCorreoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_buscarDirectorioCorreoMouseClicked
         // TODO add your handling code here:
-        String nombre1,apellido1,usuario1,contra1;
-        if (jt_tablaDirectorioCorreo.getSelectedRow()>=0) {
-            esSeleccion=true;
-        }
         
-        if (esSeleccion) {//que salga la info de lo que tiene seleccionado en la tabla
-           nombre1 = (String) jt_tablaDirectorioCorreo.getValueAt(jt_tablaDirectorioCorreo.getSelectedRow(), 0);
             
-            
-            
-        } else if (jcb_directorioCorreo.getSelectedIndex()>=0){ //que salga de el combo box
+      if (jcb_directorioCorreo.getSelectedIndex()>=0){ //que salga de el combo box
             //INFO DE UN CORREO EN ESPECIFICO
             String nombreBuscar = jcb_directorioCorreo.getSelectedItem().toString();
             jd_listarDirectorioAdmin.setVisible(true);
-            String asunto = "SELECT asunto from correo WHERE correoEmisor='"+nombreBuscar+"'";
-            String to = "SELECT correoReceptor from correo WHERE correoEmisor='"+nombreBuscar+"'";
-            String from = "SELECT correoEmisor from correo WHERE correoEmisor='"+nombreBuscar+"'";
-            String cuerpo = "SELECT cuerpo from correo WHERE correoEmisor='"+nombreBuscar+"'";
+            String sql = "SELECT * from correo WHERE correoEmisor='"+nombreBuscar+"'";
+            String correoEmisor,correoReceptor,asunto,cuerpo;
             
             try {
                 Statement st = cn.createStatement();
-                ResultSet rs1 = st.executeQuery(asunto);
-                ResultSet rs2 = st.executeQuery(to);
-                ResultSet rs3 = st.executeQuery(from);
-                ResultSet rs4 = st.executeQuery(cuerpo);
+                ResultSet rs = st.executeQuery(sql);
+                String datos []= new String [4];
                 
-                jl_listarDirectorioA.setText(rs1.toString());
-                jl_listarDirectorioCorreoE.setText(rs2.toString());
-                jl_listarDirectoriocorreoR.setText(rs3.toString());
-                DefaultListModel m = (DefaultListModel) jl_showCorreoCuerpo.getModel();
-                m.addElement(rs4.toString());
-                jl_showCorreoCuerpo.setModel(m);
-            } catch (Exception e) {
-                e.printStackTrace();
+                while (rs.next()){
+                    datos[0] = rs.getString(1);
+                    datos[1] = rs.getString(2);
+                    datos[2] = rs.getString(3);
+                    datos[3] = rs.getString(4);
+                }
+                correoEmisor = datos[0];
+                correoReceptor = datos[1];
+                asunto = datos[2];
+                cuerpo = datos[3];
+                
+                jl_listarDirectorioA.setText(correoEmisor);
+                jl_listarDirectorioCorreoE.setText(correoReceptor);
+                jl_listarDirectoriocorreoR.setText(asunto);
+                DefaultListModel m2 = (DefaultListModel) jl_showCorreoCuerpo.getModel();
+                m2.addElement(cuerpo);
+                jl_showCorreoCuerpo.setModel(m2);
+                if (jl_listarDirectorioA.getText() != null) {
+                    mostrosJDialogs(jd_listarDirectorioAdmin);
+                }else
+                    JOptionPane.showMessageDialog(null,"No tiene correo.");
+                
+                moduloAdmin.setVisible(false);
+            }   catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "error.");
+                Logger.getLogger(prinicpalProyecto.class.getName()).log(Level.SEVERE, null, ex);
             }
-            mostrosJDialogs(jd_listarDirectorioAdmin);
-            moduloAdmin.setVisible(false);
-        }
         
+            jt_tablaDirectorioCorreo.clearSelection();
+        }
         
     }//GEN-LAST:event_jb_buscarDirectorioCorreoMouseClicked
 
