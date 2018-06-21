@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,7 +20,7 @@ public class prinicpalProyecto extends javax.swing.JFrame {
 Usuario actual;
 Conectar cc=new Conectar();
 Connection cn =cc.conexion();
-Boolean esAdmin=false, esSeleccion=false, esDraft=false;
+Boolean esAdmin=true, esSeleccion=false, esDraft=false;
 VistaPrincipal vp= new VistaPrincipal();
 WindowEvent we;
     public prinicpalProyecto() {
@@ -29,6 +30,12 @@ WindowEvent we;
         jd_login.setModal(true);
         jd_login.setLocationRelativeTo(null);
         jd_login.setVisible(true);
+        
+        jl_correoContacto.setVisible(false);
+        jl_nombreContacto.setVisible(false);
+        tf_nombreContacto.setVisible(false);
+        tf_correoContacto.setVisible(false);
+        jb_agregarContacto.setVisible(false);
     }
 
     public boolean guardarDraft(){
@@ -39,6 +46,27 @@ WindowEvent we;
         return esDraft;
     }
     
+    public void mostrosJDialogs(JDialog jd){
+        jd.pack();
+        jd.setModal(true);
+        jd.setLocationRelativeTo(null);
+        jd.setVisible(true);
+    }
+    
+     public int numRows() throws Exception {
+         int number = -1;
+        try {
+            // Statements allow to issue SQL queries to the database
+            String sql = "select count(*) FROM contactos where pertenecienteCorreo='"+actual.getCorreo()+"'";
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                number = rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return number;
+     }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -56,7 +84,7 @@ WindowEvent we;
         jLabel4 = new javax.swing.JLabel();
         moduloAdmin = new javax.swing.JDialog();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jb_enviarCorreoAdmin = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -65,9 +93,9 @@ WindowEvent we;
         jLabel31 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        tf_directorioCorreo = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jt_tablaDirectorioCorreo = new javax.swing.JTable();
+        jcb_directorioCorreo = new javax.swing.JComboBox<>();
         moduloBandejas = new javax.swing.JDialog();
         moduloCRUDCorreos = new javax.swing.JDialog();
         jPanel2 = new javax.swing.JPanel();
@@ -82,7 +110,6 @@ WindowEvent we;
         jl_apellidoCRUD = new javax.swing.JLabel();
         jl_correoCRUD = new javax.swing.JLabel();
         jl_contraCRUD = new javax.swing.JLabel();
-        moduloLecturaCorreos = new javax.swing.JDialog();
         moduloChats = new javax.swing.JDialog();
         moduloTareas = new javax.swing.JDialog();
         moduloReuniones = new javax.swing.JDialog();
@@ -118,18 +145,16 @@ WindowEvent we;
         jb_modificarCorreo = new javax.swing.JButton();
         jb_cancelModificarCorreo = new javax.swing.JButton();
         jd_listarDirectorioAdmin = new javax.swing.JDialog();
-        jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        textAreaCorreo = new javax.swing.JTextArea();
         jLabel30 = new javax.swing.JLabel();
         jb_regresarModuAdmin = new javax.swing.JLabel();
-        jl_listarDirectorioN = new javax.swing.JLabel();
         jl_listarDirectorioA = new javax.swing.JLabel();
         jl_listarDirectoriocorreoR = new javax.swing.JLabel();
         jl_listarDirectorioCorreoE = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jl_showCorreoCuerpo = new javax.swing.JList<>();
         moduloLecturaCorreo = new javax.swing.JDialog();
         jPanel3 = new javax.swing.JPanel();
         jb_enviarNuevoCorreo = new javax.swing.JButton();
@@ -147,7 +172,7 @@ WindowEvent we;
         jLabel35 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
-        jLabel38 = new javax.swing.JLabel();
+        jl_agregarContactos = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel40 = new javax.swing.JLabel();
@@ -164,19 +189,35 @@ WindowEvent we;
         jLabel45 = new javax.swing.JLabel();
         jLabel46 = new javax.swing.JLabel();
         jLabel47 = new javax.swing.JLabel();
-        jLabel48 = new javax.swing.JLabel();
+        jl_showContacts = new javax.swing.JLabel();
         jLabel49 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
-        jButton5 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
+        jb_enviarCorreo = new javax.swing.JButton();
+        jb_saveDraft = new javax.swing.JButton();
+        jb_discardDraft = new javax.swing.JButton();
         jLabel50 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         tf_asunto = new javax.swing.JTextField();
         jScrollPane4 = new javax.swing.JScrollPane();
         textAreaCorreo1 = new javax.swing.JTextArea();
         cb_correosContactos = new javax.swing.JComboBox<>();
+        showInbox = new javax.swing.JDialog();
+        showChats = new javax.swing.JDialog();
+        showSentMail = new javax.swing.JDialog();
+        showDrafts = new javax.swing.JDialog();
+        showSpam = new javax.swing.JDialog();
+        showContacts = new javax.swing.JDialog();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jb_enabledBottonContacto = new javax.swing.JButton();
+        jPanel10 = new javax.swing.JPanel();
+        jl_nombreContacto = new javax.swing.JLabel();
+        tf_correoContacto = new javax.swing.JTextField();
+        jl_correoContacto = new javax.swing.JLabel();
+        jb_agregarContacto = new javax.swing.JButton();
+        tf_nombreContacto = new javax.swing.JTextField();
+        showTask = new javax.swing.JDialog();
         jl_cuenta = new javax.swing.JLabel();
         jl_correo = new javax.swing.JLabel();
         jl_reunion = new javax.swing.JLabel();
@@ -268,9 +309,20 @@ WindowEvent we;
                 .addContainerGap(345, Short.MAX_VALUE))
         );
 
+        moduloAdmin.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                moduloAdminWindowOpened(evt);
+            }
+        });
+
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Usuario\\Documents\\PROGRA 2 PROJECTS\\Fotos proyecto\\Foto peque\\enviar correo.png")); // NOI18N
+        jb_enviarCorreoAdmin.setIcon(new javax.swing.ImageIcon("C:\\Users\\Usuario\\Documents\\PROGRA 2 PROJECTS\\Fotos proyecto\\Foto peque\\enviar correo.png")); // NOI18N
+        jb_enviarCorreoAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_enviarCorreoAdminMouseClicked(evt);
+            }
+        });
 
         jLabel1.setText("Enviar Correo");
 
@@ -299,7 +351,7 @@ WindowEvent we;
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jb_enviarCorreoAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
@@ -323,11 +375,10 @@ WindowEvent we;
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jb_buscarDirectorioCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jb_buscarDirectorioCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jb_enviarCorreoAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -343,7 +394,7 @@ WindowEvent we;
 
             },
             new String [] {
-                "Nombre", "Direccion Electronica", "Telefono"
+                "Nombre", "Direccion Electronica"
             }
         ));
         jScrollPane1.setViewportView(jt_tablaDirectorioCorreo);
@@ -362,8 +413,8 @@ WindowEvent we;
                             .addGroup(moduloAdminLayout.createSequentialGroup()
                                 .addGap(20, 20, 20)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tf_directorioCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(jcb_directorioCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(moduloAdminLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 706, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -376,9 +427,11 @@ WindowEvent we;
                 .addGap(33, 33, 33)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(moduloAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(moduloAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tf_directorioCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(moduloAdminLayout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jcb_directorioCorreo)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -511,17 +564,6 @@ WindowEvent we;
                 .addGap(29, 29, 29)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(33, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout moduloLecturaCorreosLayout = new javax.swing.GroupLayout(moduloLecturaCorreos.getContentPane());
-        moduloLecturaCorreos.getContentPane().setLayout(moduloLecturaCorreosLayout);
-        moduloLecturaCorreosLayout.setHorizontalGroup(
-            moduloLecturaCorreosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        moduloLecturaCorreosLayout.setVerticalGroup(
-            moduloLecturaCorreosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout moduloChatsLayout = new javax.swing.GroupLayout(moduloChats.getContentPane());
@@ -742,17 +784,11 @@ WindowEvent we;
                 .addContainerGap())
         );
 
-        jLabel26.setText("Nombre");
-
         jLabel27.setText("Asunto:");
 
         jLabel28.setText("To:");
 
         jLabel29.setText("From:");
-
-        textAreaCorreo.setColumns(20);
-        textAreaCorreo.setRows(5);
-        jScrollPane2.setViewportView(textAreaCorreo);
 
         jLabel30.setText("Correo:");
 
@@ -763,61 +799,54 @@ WindowEvent we;
             }
         });
 
-        jl_listarDirectorioN.setText("jLabel32");
-
         jl_listarDirectorioA.setText("jj");
 
         jl_listarDirectoriocorreoR.setText("jLabel34");
 
         jl_listarDirectorioCorreoE.setText("jLabel35");
 
+        jl_showCorreoCuerpo.setModel(new DefaultListModel());
+        jScrollPane6.setViewportView(jl_showCorreoCuerpo);
+
         javax.swing.GroupLayout jd_listarDirectorioAdminLayout = new javax.swing.GroupLayout(jd_listarDirectorioAdmin.getContentPane());
         jd_listarDirectorioAdmin.getContentPane().setLayout(jd_listarDirectorioAdminLayout);
         jd_listarDirectorioAdminLayout.setHorizontalGroup(
             jd_listarDirectorioAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_listarDirectorioAdminLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
                 .addGroup(jd_listarDirectorioAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jd_listarDirectorioAdminLayout.createSequentialGroup()
-                        .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jl_listarDirectorioN, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_listarDirectorioAdminLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jb_regresarModuAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jd_listarDirectorioAdminLayout.createSequentialGroup()
-                        .addGroup(jd_listarDirectorioAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jd_listarDirectorioAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jd_listarDirectorioAdminLayout.createSequentialGroup()
-                                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jl_listarDirectoriocorreoR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(45, 45, 45)
+                                .addGroup(jd_listarDirectorioAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jd_listarDirectorioAdminLayout.createSequentialGroup()
+                                        .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jl_listarDirectoriocorreoR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(jd_listarDirectorioAdminLayout.createSequentialGroup()
+                                        .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jl_listarDirectorioA, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jd_listarDirectorioAdminLayout.createSequentialGroup()
+                                        .addGroup(jd_listarDirectorioAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel30))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jl_listarDirectorioCorreoE, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jd_listarDirectorioAdminLayout.createSequentialGroup()
-                                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jl_listarDirectorioA, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jd_listarDirectorioAdminLayout.createSequentialGroup()
-                                .addGroup(jd_listarDirectorioAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel30))
-                                .addGap(18, 18, 18)
-                                .addComponent(jl_listarDirectorioCorreoE, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(63, 63, 63)
+                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 77, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_listarDirectorioAdminLayout.createSequentialGroup()
-                .addContainerGap(63, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
         );
         jd_listarDirectorioAdminLayout.setVerticalGroup(
             jd_listarDirectorioAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_listarDirectorioAdminLayout.createSequentialGroup()
-                .addGroup(jd_listarDirectorioAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jb_regresarModuAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jd_listarDirectorioAdminLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(jd_listarDirectorioAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jl_listarDirectorioN, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jb_regresarModuAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
                 .addGroup(jd_listarDirectorioAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jl_listarDirectorioA, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -831,9 +860,9 @@ WindowEvent we;
                     .addComponent(jl_listarDirectorioCorreoE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel30)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -926,7 +955,12 @@ WindowEvent we;
 
         jLabel37.setText("Trash");
 
-        jLabel38.setText("Contacks");
+        jl_agregarContactos.setText("Contacks");
+        jl_agregarContactos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jl_agregarContactosMouseClicked(evt);
+            }
+        });
 
         jLabel39.setText("Task");
 
@@ -940,7 +974,7 @@ WindowEvent we;
             .addComponent(jLabel35, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel36, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel38, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+            .addComponent(jl_agregarContactos, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
             .addComponent(jLabel39, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
@@ -959,7 +993,7 @@ WindowEvent we;
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jl_agregarContactos, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
@@ -1055,6 +1089,9 @@ WindowEvent we;
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 redactarCorreoWindowClosing(evt);
             }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                redactarCorreoWindowOpened(evt);
+            }
         });
 
         jPanel9.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -1073,7 +1110,12 @@ WindowEvent we;
 
         jLabel47.setText("Trash");
 
-        jLabel48.setText("Contacks");
+        jl_showContacts.setText("Contacts");
+        jl_showContacts.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jl_showContactsMouseClicked(evt);
+            }
+        });
 
         jLabel49.setText("Task");
 
@@ -1087,7 +1129,7 @@ WindowEvent we;
             .addComponent(jLabel45, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel46, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel47, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel48, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+            .addComponent(jl_showContacts, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
             .addComponent(jLabel49, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel11Layout.setVerticalGroup(
@@ -1106,7 +1148,7 @@ WindowEvent we;
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jl_showContacts, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
@@ -1129,16 +1171,26 @@ WindowEvent we;
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton5.setText("Send");
-        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+        jb_enviarCorreo.setText("Send");
+        jb_enviarCorreo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton5MouseClicked(evt);
+                jb_enviarCorreoMouseClicked(evt);
             }
         });
 
-        jButton10.setText("Save Now");
+        jb_saveDraft.setText("Save Now");
+        jb_saveDraft.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_saveDraftMouseClicked(evt);
+            }
+        });
 
-        jButton11.setText("Discard");
+        jb_discardDraft.setText("Discard");
+        jb_discardDraft.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_discardDraftMouseClicked(evt);
+            }
+        });
 
         jLabel50.setText("To:");
 
@@ -1158,7 +1210,7 @@ WindowEvent we;
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jButton5)
+                                .addComponent(jb_enviarCorreo)
                                 .addGroup(jPanel13Layout.createSequentialGroup()
                                     .addGap(25, 25, 25)
                                     .addComponent(jLabel50)))
@@ -1166,9 +1218,9 @@ WindowEvent we;
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel13Layout.createSequentialGroup()
-                                .addComponent(jButton10)
+                                .addComponent(jb_saveDraft)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton11))
+                                .addComponent(jb_discardDraft))
                             .addComponent(tf_asunto)
                             .addComponent(cb_correosContactos, 0, 340, Short.MAX_VALUE)))
                     .addGroup(jPanel13Layout.createSequentialGroup()
@@ -1181,9 +1233,9 @@ WindowEvent we;
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton5)
-                    .addComponent(jButton10)
-                    .addComponent(jButton11))
+                    .addComponent(jb_enviarCorreo)
+                    .addComponent(jb_saveDraft)
+                    .addComponent(jb_discardDraft))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel50)
@@ -1222,6 +1274,168 @@ WindowEvent we;
             redactarCorreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout showInboxLayout = new javax.swing.GroupLayout(showInbox.getContentPane());
+        showInbox.getContentPane().setLayout(showInboxLayout);
+        showInboxLayout.setHorizontalGroup(
+            showInboxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        showInboxLayout.setVerticalGroup(
+            showInboxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout showChatsLayout = new javax.swing.GroupLayout(showChats.getContentPane());
+        showChats.getContentPane().setLayout(showChatsLayout);
+        showChatsLayout.setHorizontalGroup(
+            showChatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        showChatsLayout.setVerticalGroup(
+            showChatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout showSentMailLayout = new javax.swing.GroupLayout(showSentMail.getContentPane());
+        showSentMail.getContentPane().setLayout(showSentMailLayout);
+        showSentMailLayout.setHorizontalGroup(
+            showSentMailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        showSentMailLayout.setVerticalGroup(
+            showSentMailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout showDraftsLayout = new javax.swing.GroupLayout(showDrafts.getContentPane());
+        showDrafts.getContentPane().setLayout(showDraftsLayout);
+        showDraftsLayout.setHorizontalGroup(
+            showDraftsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        showDraftsLayout.setVerticalGroup(
+            showDraftsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout showSpamLayout = new javax.swing.GroupLayout(showSpam.getContentPane());
+        showSpam.getContentPane().setLayout(showSpamLayout);
+        showSpamLayout.setHorizontalGroup(
+            showSpamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        showSpamLayout.setVerticalGroup(
+            showSpamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre ", "Correo"
+            }
+        ));
+        jScrollPane5.setViewportView(jTable1);
+
+        jb_enabledBottonContacto.setText("Agregar Contacto Nuevo");
+        jb_enabledBottonContacto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_enabledBottonContactoMouseClicked(evt);
+            }
+        });
+
+        jPanel10.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jl_nombreContacto.setText("Nombre Completo");
+
+        jl_correoContacto.setText("Correo");
+
+        jb_agregarContacto.setText("Agregar");
+        jb_agregarContacto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_agregarContactoMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addComponent(jl_correoContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tf_correoContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addComponent(jl_nombreContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tf_nombreContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                        .addComponent(jb_agregarContacto)
+                        .addGap(41, 41, 41))))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jl_nombreContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tf_nombreContacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jb_agregarContacto, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jl_correoContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_correoContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout showContactsLayout = new javax.swing.GroupLayout(showContacts.getContentPane());
+        showContacts.getContentPane().setLayout(showContactsLayout);
+        showContactsLayout.setHorizontalGroup(
+            showContactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(showContactsLayout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jb_enabledBottonContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, showContactsLayout.createSequentialGroup()
+                .addContainerGap(47, Short.MAX_VALUE)
+                .addGroup(showContactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, showContactsLayout.createSequentialGroup()
+                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(81, 81, 81))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, showContactsLayout.createSequentialGroup()
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39))))
+        );
+        showContactsLayout.setVerticalGroup(
+            showContactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(showContactsLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jb_enabledBottonContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout showTaskLayout = new javax.swing.GroupLayout(showTask.getContentPane());
+        showTask.getContentPane().setLayout(showTaskLayout);
+        showTaskLayout.setHorizontalGroup(
+            showTaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        showTaskLayout.setVerticalGroup(
+            showTaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1292,12 +1506,7 @@ WindowEvent we;
         // TODO add your handling code here:
         
         //que le de click a registrarse 
-        jd_regristrar.pack();
-        jd_regristrar.setModal(true);
-        jd_regristrar.setLocationRelativeTo(null);
-        jd_regristrar.setVisible(true);
-        
-        
+        mostrosJDialogs(jd_regristrar);
     }//GEN-LAST:event_jl_loginMouseClicked
 
     private void jb_loginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_loginMouseClicked
@@ -1340,6 +1549,7 @@ WindowEvent we;
                     if (rs.next()) {
                         JOptionPane.showMessageDialog(this, "Bienvenido!");
                         actual = new Usuario(nombre, apellido, user, pass, new Correo(correo), pregunta, respuesta);
+                        esAdmin = false;
                     } else if (user.equals("admin") && pass.equals("1")) {
                         esAdmin = true;
                     } else {
@@ -1382,46 +1592,20 @@ WindowEvent we;
     private void jl_correoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_correoMouseClicked
         // ENTRA AL CORREO
         if (esAdmin) {
-            moduloAdmin.setModal(true);
-            moduloAdmin.pack();
-            moduloAdmin.setLocationRelativeTo(this);
-            moduloAdmin.setVisible(true);
+            mostrosJDialogs(moduloAdmin);
 
-            DefaultTableModel m = (DefaultTableModel) jt_tablaDirectorioCorreo.getModel();
-            String sql = "SELECT nombre,correo FROM correo";
-
-            String[] datos = new String[2];
-            try {
-                Statement st = cn.createStatement();
-                ResultSet rs = st.executeQuery(sql);
-                while (rs.next()) {
-                    datos[0] = rs.getString(1);
-
-                    datos[1] = rs.getString(2);
-                    m.addRow(datos);
-                }
-                jt_tablaDirectorioCorreo.setModel(m);
-                esSeleccion = true;
-            } catch (SQLException ex) {
-            }
             
             //o la información de algún correo en específico.
             
-        } else if(esAdmin==false) {
-            moduloLecturaCorreo.setModal(true);
-            moduloLecturaCorreo.pack();
-            moduloLecturaCorreo.setLocationRelativeTo(this);
-            moduloLecturaCorreo.setVisible(true);
+        } else if(!esAdmin) {
+            mostrosJDialogs(moduloLecturaCorreo);
             
         }
     }//GEN-LAST:event_jl_correoMouseClicked
 
     private void jb_correoCRUDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_correoCRUDMouseClicked
         // TODO add your handling code here:
-        jd_modificarAccountCorreo.setModal(true);
-        jd_modificarAccountCorreo.pack();
-        jd_modificarAccountCorreo.setLocationRelativeTo(this);
-        jd_modificarAccountCorreo.setVisible(true);
+        mostrosJDialogs(jd_modificarAccountCorreo);
         
     }//GEN-LAST:event_jb_correoCRUDMouseClicked
 
@@ -1458,21 +1642,43 @@ WindowEvent we;
 
     private void jb_buscarDirectorioCorreoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_buscarDirectorioCorreoMouseClicked
         // TODO add your handling code here:
+        String nombre1,apellido1,usuario1,contra1;
+        if (jt_tablaDirectorioCorreo.getSelectedRow()>=0) {
+            esSeleccion=true;
+        }
+        
         if (esSeleccion) {//que salga la info de lo que tiene seleccionado en la tabla
-           
-        } else { //que salga de el text field
-            jd_listarDirectorioAdmin.setVisible(true);
-            String nombre = "SELECT nombre from correo WHERE nombre='"+tf_directorioCorreo+"'";
-            String asunto = "SELECT asunto from correo WHERE nombre='"+tf_directorioCorreo+"'";
-            String to = "SELECT correoReceptor from correo WHERE nombre='"+tf_directorioCorreo+"'";
-            String from = "SELECT correoEmisor from correo WHERE nombre='"+tf_directorioCorreo+"'";
-            String cuerpo = "SELECT cuerpo from correo WHERE nombre='"+tf_directorioCorreo+"'";
+           nombre1 = (String) jt_tablaDirectorioCorreo.getValueAt(jt_tablaDirectorioCorreo.getSelectedRow(), 0);
             
-            jl_listarDirectorioN.setText(nombre);
-            jl_listarDirectorioA.setText(asunto);
-            jl_listarDirectorioCorreoE.setText(from);
-            jl_listarDirectoriocorreoR.setText(to);
-            textAreaCorreo.setText(cuerpo);
+            
+            
+        } else if (jcb_directorioCorreo.getSelectedIndex()>=0){ //que salga de el combo box
+            //INFO DE UN CORREO EN ESPECIFICO
+            String nombreBuscar = jcb_directorioCorreo.getSelectedItem().toString();
+            jd_listarDirectorioAdmin.setVisible(true);
+            String asunto = "SELECT asunto from correo WHERE correoEmisor='"+nombreBuscar+"'";
+            String to = "SELECT correoReceptor from correo WHERE correoEmisor='"+nombreBuscar+"'";
+            String from = "SELECT correoEmisor from correo WHERE correoEmisor='"+nombreBuscar+"'";
+            String cuerpo = "SELECT cuerpo from correo WHERE correoEmisor='"+nombreBuscar+"'";
+            
+            try {
+                Statement st = cn.createStatement();
+                ResultSet rs1 = st.executeQuery(asunto);
+                ResultSet rs2 = st.executeQuery(to);
+                ResultSet rs3 = st.executeQuery(from);
+                ResultSet rs4 = st.executeQuery(cuerpo);
+                
+                jl_listarDirectorioA.setText(rs1.toString());
+                jl_listarDirectorioCorreoE.setText(rs2.toString());
+                jl_listarDirectoriocorreoR.setText(rs3.toString());
+                DefaultListModel m = (DefaultListModel) jl_showCorreoCuerpo.getModel();
+                m.addElement(rs4.toString());
+                jl_showCorreoCuerpo.setModel(m);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            mostrosJDialogs(jd_listarDirectorioAdmin);
+            moduloAdmin.setVisible(false);
         }
         
         
@@ -1485,18 +1691,20 @@ WindowEvent we;
 
     private void jb_enviarNuevoCorreoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_enviarNuevoCorreoMouseClicked
         // TODO add your handling code here:
-        redactarCorreo.setModal(true);
-        redactarCorreo.pack();
-        redactarCorreo.setLocationRelativeTo(this);
-        redactarCorreo.setVisible(true);
+        mostrosJDialogs(redactarCorreo);
+        //llenar combobox de los contactos
         
-        //llenar combobox de los amigos
-        DefaultComboBoxModel m = (DefaultComboBoxModel)cb_correosContactos.getModel();
-        String sql = "SELECT correo FROM contactos";
+        /*
+        quieroque se guarden solamente los contactos del usuario. 
+        puedo hacer una validacion.. 
+        pertenenciente = actual.getCorreo()
+        y que escoja los correos de los que su pertenetiente es el actual
+        */
+        
         
     }//GEN-LAST:event_jb_enviarNuevoCorreoMouseClicked
 
-    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
+    private void jb_enviarCorreoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_enviarCorreoMouseClicked
         // TODO add your handling code here:
         String correoEmisor = actual.getCorreo().toString();
         String correoReceptor = cb_correosContactos.getSelectedItem().toString();
@@ -1517,8 +1725,10 @@ WindowEvent we;
                 pst.setString(4, cuerpo);
                 pst.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Envio exitoso");
+                redactarCorreo.dispose();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Error al enviar");
+                e.printStackTrace();
             }  
             
         } else if (cb_correosContactos.getSelectedIndex()<0)  {
@@ -1527,7 +1737,7 @@ WindowEvent we;
         
         
         
-    }//GEN-LAST:event_jButton5MouseClicked
+    }//GEN-LAST:event_jb_enviarCorreoMouseClicked
 
     private void jb_crudCorreo1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_crudCorreo1MouseClicked
         // TODO add your handling code here:
@@ -1541,10 +1751,7 @@ WindowEvent we;
         }else
             JOptionPane.showMessageDialog(this, "ya borro su cuenta.");
         
-        moduloCRUDCorreos.setModal(true);
-        moduloCRUDCorreos.pack();
-        moduloCRUDCorreos.setLocationRelativeTo(this);
-        moduloCRUDCorreos.setVisible(true);
+        mostrosJDialogs(moduloCRUDCorreos);
     }//GEN-LAST:event_jb_crudCorreo1MouseClicked
 
     private void redactarCorreoWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_redactarCorreoWindowClosing
@@ -1591,6 +1798,145 @@ WindowEvent we;
         
     }//GEN-LAST:event_jl_verInboxMouseMoved
 
+    private void jb_saveDraftMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_saveDraftMouseClicked
+        // TODO add your handling code here:
+        String correoEmisor = actual.getCorreo().toString();
+        String correoReceptor="";
+        String asunto = tf_asunto.getText();
+        String cuerpo = textAreaCorreo1.getText();
+        if (cb_correosContactos.getSelectedIndex()<0) {
+            correoReceptor="nulo";
+        }else if(asunto.equals("")){
+            asunto="nulo";
+        }else if(cuerpo.equals("")){
+            cuerpo="nulo";
+        }else if(cb_correosContactos.getSelectedIndex()>=0){
+            correoReceptor = cb_correosContactos.getSelectedItem().toString();
+        }
+        
+        try {
+            PreparedStatement pst = cn.prepareStatement("INSERT INTO draft(correoEmisor,correoReceptor,asunto,cuerpo) VALUES(?,?,?,?)");
+            pst.setString(1, correoEmisor);
+            pst.setString(2, correoReceptor);
+            pst.setString(3, asunto);
+            pst.setString(4, cuerpo);
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Draft guardado exitosamente");
+            redactarCorreo.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al guardar draft");
+            e.printStackTrace();
+        } 
+        
+    }//GEN-LAST:event_jb_saveDraftMouseClicked
+
+    private void jb_discardDraftMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_discardDraftMouseClicked
+        // TODO add your handling code here:
+        redactarCorreo.setVisible(false);
+    }//GEN-LAST:event_jb_discardDraftMouseClicked
+
+    private void jb_enabledBottonContactoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_enabledBottonContactoMouseClicked
+        // TODO add your handling code here:
+        jl_correoContacto.setVisible(true);
+        jl_nombreContacto.setVisible(true);
+        tf_nombreContacto.setVisible(true);
+        tf_correoContacto.setVisible(true);
+    }//GEN-LAST:event_jb_enabledBottonContactoMouseClicked
+
+    private void jb_agregarContactoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_agregarContactoMouseClicked
+        // TODO add your handling code here:
+        if (!tf_nombreContacto.equals("") && !tf_correoContacto.equals("")) {
+            
+            try {
+                PreparedStatement pst = cn.prepareStatement("INSERT INTO contactos(nombreCompleto,correo,pertenecienteCorreo) VALUES(?,?,?)");
+                pst.setString(1, tf_nombreContacto.getText());
+                pst.setString(2, tf_correoContacto.getText());
+                pst.setString(3, actual.getCorreo().toString());
+                pst.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Registro exitoso");
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error al agregar");
+                e.printStackTrace();
+            }
+        }else 
+            JOptionPane.showMessageDialog(this, "Llene los campos para agregar nuevo contacto.");
+    }//GEN-LAST:event_jb_agregarContactoMouseClicked
+
+    private void jl_showContactsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_showContactsMouseClicked
+        // mouse click desde redactarCorreo
+        moduloLecturaCorreo.dispose();
+        mostrosJDialogs(showContacts);
+    }//GEN-LAST:event_jl_showContactsMouseClicked
+
+    private void jb_enviarCorreoAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_enviarCorreoAdminMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jb_enviarCorreoAdminMouseClicked
+
+    private void jl_agregarContactosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_agregarContactosMouseClicked
+        // agrego contactos desde lecturaCorreos 
+        //this.setVisible(false);
+        moduloLecturaCorreo.dispose();
+        jb_agregarContacto.setVisible(true);
+        mostrosJDialogs(showContacts);
+    }//GEN-LAST:event_jl_agregarContactosMouseClicked
+
+    private void redactarCorreoWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_redactarCorreoWindowOpened
+        // TODO add your handling code here:
+        int i=0;
+        
+        DefaultComboBoxModel m = (DefaultComboBoxModel) cb_correosContactos.getModel();
+        String sql = "SELECT correo FROM contactos where pertenecienteCorreo='"+actual.getCorreo()+"' ";
+        try {
+          Statement st = cn.createStatement();
+          ResultSet rs = st.executeQuery(sql);
+          
+          while (rs.next()) {
+                m.addElement(rs.getString(1));
+            } 
+          cb_correosContactos.setModel(m);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_redactarCorreoWindowOpened
+
+    private void moduloAdminWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_moduloAdminWindowOpened
+        // quiero que cargue el combo box con todos los usuarios y en la tabla igual con todos los usuarios.
+        DefaultComboBoxModel m = (DefaultComboBoxModel) jcb_directorioCorreo.getModel();
+        String sql = "SELECT * FROM usuario";
+        try {
+          Statement st = cn.createStatement();
+          ResultSet rs = st.executeQuery(sql);
+          
+          while (rs.next()) {
+                m.addElement(rs.getString(5));
+            } 
+          jcb_directorioCorreo.setModel(m);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        //llenar la tabla
+        DefaultTableModel m2 = (DefaultTableModel) jt_tablaDirectorioCorreo.getModel();
+        String sql2 = "SELECT nombre,correo FROM usuario";
+
+        String[] datos = new String[2];
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql2);
+            while (rs.next()) {
+                datos[0] = rs.getString(1);
+
+                datos[1] = rs.getString(2);
+                m2.addRow(datos);
+            }
+            jt_tablaDirectorioCorreo.setModel(m2);
+        } catch (SQLException ex) {
+        }
+        
+    }//GEN-LAST:event_moduloAdminWindowOpened
+
   
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -1628,13 +1974,9 @@ WindowEvent we;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cb_correosContactos;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
@@ -1658,7 +2000,6 @@ WindowEvent we;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
@@ -1670,7 +2011,6 @@ WindowEvent we;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
-    private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
@@ -1681,7 +2021,6 @@ WindowEvent we;
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
-    private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
@@ -1689,6 +2028,7 @@ WindowEvent we;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
@@ -1701,37 +2041,50 @@ WindowEvent we;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JButton jb_agregarContacto;
     private javax.swing.JButton jb_buscarDirectorioCorreo;
     private javax.swing.JButton jb_cancelModificarCorreo;
     private javax.swing.JButton jb_correoCRUD;
     private javax.swing.JButton jb_correoEliminar;
     private javax.swing.JButton jb_crudCorreo1;
+    private javax.swing.JButton jb_discardDraft;
+    private javax.swing.JButton jb_enabledBottonContacto;
+    private javax.swing.JButton jb_enviarCorreo;
+    private javax.swing.JButton jb_enviarCorreoAdmin;
     private javax.swing.JButton jb_enviarNuevoCorreo;
     private javax.swing.JButton jb_login;
     private javax.swing.JButton jb_modificarCorreo;
     private javax.swing.JLabel jb_regresarModuAdmin;
     private javax.swing.JButton jb_regristrar;
+    private javax.swing.JButton jb_saveDraft;
+    private javax.swing.JComboBox<String> jcb_directorioCorreo;
     private javax.swing.JDialog jd_bienvenido;
     private javax.swing.JDialog jd_listarDirectorioAdmin;
     private javax.swing.JDialog jd_login;
     private javax.swing.JDialog jd_modificarAccountCorreo;
     private javax.swing.JDialog jd_regristrar;
+    private javax.swing.JLabel jl_agregarContactos;
     private javax.swing.JLabel jl_apellidoCRUD;
     private javax.swing.JLabel jl_chat;
     private javax.swing.JLabel jl_contraCRUD;
     private javax.swing.JLabel jl_correo;
     private javax.swing.JLabel jl_correoCRUD;
+    private javax.swing.JLabel jl_correoContacto;
     private javax.swing.JLabel jl_cuenta;
     private javax.swing.JLabel jl_listarDirectorioA;
     private javax.swing.JLabel jl_listarDirectorioCorreoE;
-    private javax.swing.JLabel jl_listarDirectorioN;
     private javax.swing.JLabel jl_listarDirectoriocorreoR;
     private javax.swing.JLabel jl_login;
     private javax.swing.JLabel jl_nombreCRUD;
+    private javax.swing.JLabel jl_nombreContacto;
     private javax.swing.JLabel jl_reunion;
+    private javax.swing.JLabel jl_showContacts;
+    private javax.swing.JList<String> jl_showCorreoCuerpo;
     private javax.swing.JLabel jl_tarea;
     private javax.swing.JLabel jl_verInbox;
     private javax.swing.JMenuItem jmi_borrarCorreo;
@@ -1744,23 +2097,29 @@ WindowEvent we;
     private javax.swing.JDialog moduloCRUDCorreos;
     private javax.swing.JDialog moduloChats;
     private javax.swing.JDialog moduloLecturaCorreo;
-    private javax.swing.JDialog moduloLecturaCorreos;
     private javax.swing.JDialog moduloReuniones;
     private javax.swing.JDialog moduloTareas;
     private javax.swing.JPopupMenu pop_correosModificarBorrarCrear;
     private javax.swing.JDialog redactarCorreo;
-    private javax.swing.JTextArea textAreaCorreo;
+    private javax.swing.JDialog showChats;
+    private javax.swing.JDialog showContacts;
+    private javax.swing.JDialog showDrafts;
+    private javax.swing.JDialog showInbox;
+    private javax.swing.JDialog showSentMail;
+    private javax.swing.JDialog showSpam;
+    private javax.swing.JDialog showTask;
     private javax.swing.JTextArea textAreaCorreo1;
     private javax.swing.JTextField tf_apellido1;
     private javax.swing.JTextField tf_asunto;
     private javax.swing.JTextField tf_contra1;
     private javax.swing.JTextField tf_correo;
-    private javax.swing.JTextField tf_directorioCorreo;
+    private javax.swing.JTextField tf_correoContacto;
     private javax.swing.JTextField tf_modificarA;
     private javax.swing.JTextField tf_modificarC;
     private javax.swing.JTextField tf_modificarContra;
     private javax.swing.JTextField tf_modificarN;
     private javax.swing.JTextField tf_nombre1;
+    private javax.swing.JTextField tf_nombreContacto;
     private javax.swing.JPasswordField tf_pass;
     private javax.swing.JTextField tf_pregunta;
     private javax.swing.JTextField tf_respuesta;
