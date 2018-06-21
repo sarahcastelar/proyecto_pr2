@@ -174,11 +174,10 @@ WindowEvent we;
         jLabel37 = new javax.swing.JLabel();
         jl_agregarContactos = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
+        panelUniverso = new javax.swing.JPanel();
         jLabel40 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        listTodo = new javax.swing.JList<>();
-        jPanel8 = new javax.swing.JPanel();
+        panelShowInbox = new javax.swing.JPanel();
+        jPanel14 = new javax.swing.JPanel();
         jButton9 = new javax.swing.JButton();
         redactarCorreo = new javax.swing.JDialog();
         jPanel9 = new javax.swing.JPanel();
@@ -203,6 +202,8 @@ WindowEvent we;
         textAreaCorreo1 = new javax.swing.JTextArea();
         cb_correosContactos = new javax.swing.JComboBox<>();
         showInbox = new javax.swing.JDialog();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaInbox = new javax.swing.JTable();
         showChats = new javax.swing.JDialog();
         showSentMail = new javax.swing.JDialog();
         showDrafts = new javax.swing.JDialog();
@@ -939,9 +940,9 @@ WindowEvent we;
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jl_verInbox.setText("Inbox");
-        jl_verInbox.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jl_verInboxMouseMoved(evt);
+        jl_verInbox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jl_verInboxMouseClicked(evt);
             }
         });
 
@@ -1013,44 +1014,61 @@ WindowEvent we;
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
-        jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panelUniverso.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel40.setText("Inbox");
 
-        listTodo.setModel(new DefaultListModel());
-        jScrollPane3.setViewportView(listTodo);
+        panelShowInbox.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel40, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
+        javax.swing.GroupLayout panelShowInboxLayout = new javax.swing.GroupLayout(panelShowInbox);
+        panelShowInbox.setLayout(panelShowInboxLayout);
+        panelShowInboxLayout.setHorizontalGroup(
+            panelShowInboxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 629, Short.MAX_VALUE)
+        );
+        panelShowInboxLayout.setVerticalGroup(
+            panelShowInboxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 361, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
+        jPanel14.setLayout(jPanel14Layout);
+        jPanel14Layout.setHorizontalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 511, Short.MAX_VALUE)
+        );
+        jPanel14Layout.setVerticalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 355, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout panelUniversoLayout = new javax.swing.GroupLayout(panelUniverso);
+        panelUniverso.setLayout(panelUniversoLayout);
+        panelUniversoLayout.setHorizontalGroup(
+            panelUniversoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel40, javax.swing.GroupLayout.DEFAULT_SIZE, 631, Short.MAX_VALUE)
+            .addComponent(panelShowInbox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panelUniversoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelUniversoLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(110, Short.MAX_VALUE)))
+        );
+        panelUniversoLayout.setVerticalGroup(
+            panelUniversoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelUniversoLayout.createSequentialGroup()
+                .addComponent(jLabel40)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panelShowInbox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3))
-        );
-
-        jPanel8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(panelUniversoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelUniversoLayout.createSequentialGroup()
+                    .addContainerGap(33, Short.MAX_VALUE)
+                    .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
         );
 
         jButton9.setText("Reenviar");
@@ -1066,10 +1084,8 @@ WindowEvent we;
             .addGroup(moduloLecturaCorreoLayout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(panelUniverso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         moduloLecturaCorreoLayout.setVerticalGroup(
             moduloLecturaCorreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1080,8 +1096,7 @@ WindowEvent we;
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(moduloLecturaCorreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(panelUniverso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         redactarCorreo.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -1276,15 +1291,57 @@ WindowEvent we;
             .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        showInbox.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                showInboxWindowOpened(evt);
+            }
+        });
+
+        tablaInbox.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre", "Asunto", "Tipo"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaInbox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaInboxMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tablaInbox);
+
         javax.swing.GroupLayout showInboxLayout = new javax.swing.GroupLayout(showInbox.getContentPane());
         showInbox.getContentPane().setLayout(showInboxLayout);
         showInboxLayout.setHorizontalGroup(
             showInboxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, showInboxLayout.createSequentialGroup()
+                .addContainerGap(57, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54))
         );
         showInboxLayout.setVerticalGroup(
             showInboxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, showInboxLayout.createSequentialGroup()
+                .addContainerGap(31, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
         );
 
         javax.swing.GroupLayout showChatsLayout = new javax.swing.GroupLayout(showChats.getContentPane());
@@ -1710,6 +1767,7 @@ WindowEvent we;
     private void jb_enviarCorreoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_enviarCorreoMouseClicked
         // TODO add your handling code here:
         String correoEmisor = actual.getCorreo().toString();
+        String nombreEmisor = actual.getNombre().toString();
         String correoReceptor = cb_correosContactos.getSelectedItem().toString();
         String asunto = tf_asunto.getText();
         String cuerpo = textAreaCorreo1.getText();
@@ -1721,11 +1779,13 @@ WindowEvent we;
             o select * from correos where correoReceptor = tal x para saber sus correos recibidos. 
             */
             try {
-                PreparedStatement pst = cn.prepareStatement("INSERT INTO correo(correoEmisor,correoReceptor,asunto,cuerpo) VALUES(?,?,?,?)");
-                pst.setString(1, correoEmisor);
-                pst.setString(2, correoReceptor);
-                pst.setString(3, asunto);
-                pst.setString(4, cuerpo);
+                PreparedStatement pst = cn.prepareStatement("INSERT INTO correo(correoReceptor,asunto,cuerpo,correoEmisor,nombreEmisor,tipo) VALUES(?,?,?,?,?,?)");
+                pst.setString(1, correoReceptor);
+                pst.setString(2, asunto);
+                pst.setString(3, cuerpo);
+                pst.setString(4, correoEmisor);
+                pst.setString(5, nombreEmisor);
+                pst.setString(6, "No leido");
                 pst.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Envio exitoso");
                 redactarCorreo.dispose();
@@ -1788,18 +1848,6 @@ WindowEvent we;
                 } 
         } 
     }//GEN-LAST:event_redactarCorreoWindowClosing
-
-    private void jl_verInboxMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_verInboxMouseMoved
-        // PENSAR COMO PUERCAS VAS A ESCRIBIR DE MANERA BONITA EL DISPLAY DE LOS INBOX. 
-        /*
-            pARA show los inbox solo decimos select * from correo where correoRecibido in (usuarios = actual.getCorreo) algo asi bai
-        */
-        
-        DefaultListModel m = (DefaultListModel) listTodo.getModel();
-        
-        
-        
-    }//GEN-LAST:event_jl_verInboxMouseMoved
 
     private void jb_saveDraftMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_saveDraftMouseClicked
         // TODO add your handling code here:
@@ -1940,6 +1988,105 @@ WindowEvent we;
         
     }//GEN-LAST:event_moduloAdminWindowOpened
 
+    private void jl_verInboxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_verInboxMouseClicked
+        //llenar la table de todos los correos de la persona
+        //osea bandeja de entrada
+        mostrosJDialogs(showInbox);
+    }//GEN-LAST:event_jl_verInboxMouseClicked
+
+    private void showInboxWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_showInboxWindowOpened
+        // TODO add your handling code here:
+         DefaultTableModel m = (DefaultTableModel) tablaInbox.getModel();
+        String sql = "select * from correo where correoReceptor='"+actual.getCorreo()+"'";
+        String datos [] = new String[3];
+        try{
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                datos[0]=rs.getString(5);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(6);
+                m.addRow(datos);
+            }
+            tablaInbox.setModel(m);   
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_showInboxWindowOpened
+
+    
+    
+    private void tablaInboxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInboxMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount()> 1) {
+            //System.out.println(tablaInbox.getValueAt(tablaInbox.getSelectedRow(), 0).toString());
+            int row = tablaInbox.getSelectedRow();
+            row++;
+            // int column = tablaInbox.getSelectedColumn();
+            JOptionPane.showMessageDialog(null,"funciona");
+            jd_listarDirectorioAdmin.setVisible(true);
+            String sql = "SELECT * from correo WHERE id='"+row+"'";
+            String correoEmisor,correoReceptor,asunto,cuerpo;
+            
+            try {
+                Statement st = cn.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+                String datos []= new String [4];
+                
+                while (rs.next()){
+                    datos[0] = rs.getString(1);
+                    datos[1] = rs.getString(2);
+                    datos[2] = rs.getString(3);
+                    datos[3] = rs.getString(4);
+                }
+                correoEmisor = datos[0];
+                correoReceptor = datos[1];
+                asunto = datos[2];
+                cuerpo = datos[3];
+                
+                jl_listarDirectorioA.setText(correoEmisor);
+                jl_listarDirectorioCorreoE.setText(correoReceptor);
+                jl_listarDirectoriocorreoR.setText(asunto);
+                DefaultListModel m2 = (DefaultListModel) jl_showCorreoCuerpo.getModel();
+                m2.addElement(cuerpo);
+                jl_showCorreoCuerpo.setModel(m2);
+                if (jl_listarDirectorioA.getText() != null) {
+                    mostrosJDialogs(jd_listarDirectorioAdmin);
+                }else
+                    JOptionPane.showMessageDialog(null,"No tiene correo.");
+        }   catch (SQLException ex) {
+                Logger.getLogger(prinicpalProyecto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            row--;
+            
+            String sql2 = "update correo set tipo='leido' where id='"+row+"'";
+            try {
+                PreparedStatement pst = cn.prepareStatement("update correo set tipo='leido' where id='"+row+"'");
+                pst.executeUpdate();
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            
+            DefaultTableModel m = (DefaultTableModel) tablaInbox.getModel();
+            String sql3 = "select tipo from correo where id='"+row+"'";
+            String datos[] = new String[1];
+            try {
+                Statement st = cn.createStatement();
+                ResultSet rs = st.executeQuery(sql3);
+                while (rs.next()) {
+                    datos[0] = rs.getString(1);
+                    m.setValueAt(datos[0], row, 2);
+                }
+                tablaInbox.setModel(m);
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+    }       
+    }//GEN-LAST:event_tablaInboxMouseClicked
+
   
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -2035,16 +2182,15 @@ WindowEvent we;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
@@ -2094,7 +2240,6 @@ WindowEvent we;
     private javax.swing.JMenuItem jmi_crearCorreo;
     private javax.swing.JMenuItem jmi_modificarCorreo;
     private javax.swing.JTable jt_tablaDirectorioCorreo;
-    private javax.swing.JList<String> listTodo;
     private javax.swing.JDialog moduloAdmin;
     private javax.swing.JDialog moduloBandejas;
     private javax.swing.JDialog moduloCRUDCorreos;
@@ -2102,6 +2247,8 @@ WindowEvent we;
     private javax.swing.JDialog moduloLecturaCorreo;
     private javax.swing.JDialog moduloReuniones;
     private javax.swing.JDialog moduloTareas;
+    private javax.swing.JPanel panelShowInbox;
+    private javax.swing.JPanel panelUniverso;
     private javax.swing.JPopupMenu pop_correosModificarBorrarCrear;
     private javax.swing.JDialog redactarCorreo;
     private javax.swing.JDialog showChats;
@@ -2111,6 +2258,7 @@ WindowEvent we;
     private javax.swing.JDialog showSentMail;
     private javax.swing.JDialog showSpam;
     private javax.swing.JDialog showTask;
+    private javax.swing.JTable tablaInbox;
     private javax.swing.JTextArea textAreaCorreo1;
     private javax.swing.JTextField tf_apellido1;
     private javax.swing.JTextField tf_asunto;
