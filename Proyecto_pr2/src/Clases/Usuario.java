@@ -13,13 +13,6 @@ public class Usuario {
     private Correo correo;
     private String preguntaSeguridad;
     private String respuestaSeguridad;
-    private Contacto contactosAmigos;
-    
-    private Cuenta cuentas;
-    
-    private Chat chats;
-    private Tarea tareas;
-    private Reunion reuniones;
 
     public Usuario() {
     }
@@ -96,37 +89,7 @@ public class Usuario {
         this.respuestaSeguridad = respuestaSeguridad;
     }
 
-    public Cuenta getCuentas() {
-        return cuentas;
-    }
-
-    public void setCuentas(Cuenta cuentas) {
-        this.cuentas = cuentas;
-    }
-
-    public Chat getChats() {
-        return chats;
-    }
-
-    public void setChats(Chat chats) {
-        this.chats = chats;
-    }
-
-    public Tarea getTareas() {
-        return tareas;
-    }
-
-    public void setTareas(Tarea tareas) {
-        this.tareas = tareas;
-    }
-
-    public Reunion getReuniones() {
-        return reuniones;
-    }
-
-    public void setReuniones(Reunion reuniones) {
-        this.reuniones = reuniones;
-    }
+    
     
     
     
